@@ -37,7 +37,7 @@ const Child = () => {
       name: 'Brian',
       grade: 'Grade 4',
       bio: 'Brian, is 10 years old and currently in Grade 4. Brian is a Masaai who is from the interior and came to the school several years ago. Initially the father had been somewhat paying school fees, then Brian disappeared from school. We were told that he had been transferred to another school. Then about 4 months later the Head Teacher and myself visited another school in his area and went passed the place where Brian lived and found him playing outside his place. When we made inquiries we discovered that he had not been in school since he left - he had been asking relatives when he could be in school. He was living with a grandmother, the father is a drunkard and the Uncle was supporting the grandmother and Brian with food and basics. We decided to get him back into school and look for a  sponsor - This was 3 years ago - he has never had a stable sponsor - he is an average student, however is enjoying being in school. If you would like to help him we would be grateful. Monthly cost for fees, food transport is $60AUD. Thankyou',
-      image: '/images/students/Brian.jpg',
+      image: '/images/students/Brian.JPG',
     },
     {
       id: 4,
