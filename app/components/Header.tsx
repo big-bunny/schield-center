@@ -54,8 +54,10 @@ const Header = () => {
             </ul>
           )}
         
-          {isSignedIn ?  <UserButton afterSignOutUrl="/"/> : <UserGreeting />}
         </nav>
+        <div>
+          {isSignedIn ?  <UserButton afterSignOutUrl="/"/> : <UserGreeting />}
+        </div>
       </div>
     </header>
   );
