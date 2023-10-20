@@ -157,13 +157,19 @@ const Home = () => {
                   <div className="flex items-center mt-4">
                     <div className="mr-4">
                       <h3 className="font-semibold text-lg text-white">Results</h3>
-                      {item.resultsChart && (
-                        <img
-                          src={item.resultsChart}
-                          alt={`${item.author}'s Results Chart`}
-                          className="mb-4"
-                        />
-                      )}
+                      {item.image && (
+  <div className="mt-4">
+    <Image
+      src={item.image} // Corrected
+      alt={item.author}
+      className="rounded-md w-full cursor-pointer"
+      onClick={() => openImageModal(item.image)}
+      width={400}
+      height={300}
+    />
+  </div>
+)}
+
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg text-white">Video Testimonies</h3>
