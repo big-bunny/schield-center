@@ -91,7 +91,7 @@ const Team = () => {
                   <>
                     {item.title && (
                       <a
-                        href={item.ref}
+                        href={item.title}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:underline"
