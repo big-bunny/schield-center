@@ -1,11 +1,14 @@
-"use client"
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
+"use client";
 import { useState } from 'react';
 import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
+import Script from 'next/script';
 import UserGreeting from './UserGreeting';
 
 const Header = () => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isProgramDropdownOpen, setProgramDropdownOpen] = useState(false);
+  const [isMenuDropdownOpen, setMenuDropdownOpen] = useState(false);
   const { isSignedIn } = useUser();
 
   const menuItems = [
@@ -13,7 +16,7 @@ const Header = () => {
     { text: 'About', url: '/about' },
     { text: 'Gallery', url: '/gallery' },
     { text: 'Donate', url: '/donate' },
-    { text: 'Team', url: '/team' },
+    { text: 'Team', url: '/team' }
   ];
 
   const programDropdown = [
@@ -21,89 +24,99 @@ const Header = () => {
     { text: 'Program', url: '/program' },
   ];
 
+  const menuDropdown = [
+    { text: 'Home', url: '/home' },
+    { text: 'About', url: '/about' },
+    { text: 'Gallery', url: '/gallery' },
+    { text: 'Donate', url: '/donate' },
+    { text: 'Team', url: '/team' }
+  ];
+
   return (
-    <header className="bg-gray-800 text-white py-4 relative z-50">
-      <div className="container mx-auto flex items-center justify-between">
-        <Link href="/" passHref legacyBehavior>
-          <a className="text-2xl font-bold">Schieldcenter</a>
-        </Link>
+    <div>
+      <Script strategy="beforeInteractive" src="/path/to/client-script.js" />
+      <header className="bg-gray-800 text-white py-4">
+        <div className="container mx-auto flex items-center justify-between">
+          <Link href="/" passHref legacyBehavior>
+            <a className="text-2xl font-bold">Schieldcentre</a>
+          </Link>
 
-        {/* Hamburger Menu */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setDropdownOpen(!isDropdownOpen)}
-            className="text-2xl focus:outline-none"
-          >
-            &#9776;
-          </button>
-        </div>
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setMenuDropdownOpen(!isMenuDropdownOpen)}
+              className="text-2xl focus:outline-none"
+            >
+              &#9776;
+            </button>
+           
+          </div>
 
-        {/* Dropdown for Small Screens */}
-        {isDropdownOpen && (
-          <div className="md:hidden absolute top-full mt-2 p-2 bg-gray-800 rounded-lg shadow-md z-50">
-            {menuItems.map((item, index) => (
-              <Link key={index} href={item.url} passHref legacyBehavior>
-                <a
-                  className="block text-white hover:text-gray-400 cursor-pointer py-2"
-                  onClick={() => setDropdownOpen(false)}
-                >
-                  {item.text}
-                </a>
-              </Link>
-            ))}
-            <Link href="#" passHref legacyBehavior>
-              <a
-                className="block text-white hover:text-gray-400 cursor-pointer py-2"
-                onClick={() => setDropdownOpen(false)}
-              >
-                Programs
-              </a>
-            </Link>
-            <ul className="mt-2">
-              {programDropdown.map((item, index) => (
-                <li key={index}>
-                  <Link href={item.url} passHref legacyBehavior>
-                    <a
-                      className="block text-white hover:text-gray-400 cursor-pointer py-2"
-                      onClick={() => setDropdownOpen(false)}
-                    >
+          <nav className="md:hidden">
+            {isMenuDropdownOpen && (
+              <div className="mt-2 p-2 bg-gray-800 rounded-lg shadow-md">
+                {menuDropdown.map((item, index) => (
+                  <Link key={index} href={item.url} passHref legacyBehavior>
+                    <a className="block px-4 py-2 text-white hover:text-gray-400">
                       {item.text}
                     </a>
                   </Link>
-                </li>
-              ))}
-            </ul>
+                ))}
+                <button
+                  onClick={() => setProgramDropdownOpen(!isProgramDropdownOpen)}
+                  className="block px-4 py-2 text-white hover:text-gray-400"
+                >
+                  Programs
+                </button>
+                {isProgramDropdownOpen && (
+                  <div className="mt-2 p-2 bg-gray-800 rounded-lg shadow-md">
+                    {programDropdown.map((item, index) => (
+                      <Link key={index} href={item.url} passHref  legacyBehavior>
+                        <a className="block px-4 py-2 text-white hover:text-gray-400">
+                          {item.text}
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </nav>
+
+          <nav className="hidden md:block space-x-4">
+            {menuItems.map((item, index) => (
+              <Link key={index} href={item.url} passHref legacyBehavior>
+                <a className="hover:text-gray-400">{item.text}</a>
+              </Link>
+            ))}
+            <button
+              onClick={() => setProgramDropdownOpen(!isProgramDropdownOpen)}
+              className="hover:text-gray-400"
+            >
+              Programs
+            </button>
+            {isProgramDropdownOpen && (
+              <div className="mt-2 p-2 bg-gray-800 rounded-lg shadow-md">
+                {programDropdown.map((item, index) => (
+                  <Link key={index} href={item.url} passHref legacyBehavior>
+                    <a className="block px-4 py-2 text-white hover:text-gray-400">
+                      {item.text}
+                    </a>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </nav>
+
+          <div>
+            {isSignedIn ? (
+              <UserButton afterSignOutUrl="/" />
+            ) : (
+              <UserGreeting />
+            )}
           </div>
-        )}
-
-        {/* Regular Navigation for Medium and Larger Screens */}
-        <nav className="hidden md:flex space-x-4 items-center">
-          {menuItems.map((item, index) => (
-            <Link key={index} href={item.url} passHref legacyBehavior>
-              <a className="hover:text-gray-400 cursor-pointer">
-                {item.text}
-              </a>
-            </Link>
-          ))}
-          <button
-            className={`hover:text-gray-400 ${
-              isDropdownOpen ? 'text-gray-400' : ''
-            }`}
-            onClick={() => setDropdownOpen(!isDropdownOpen)}
-          >
-            Programs
-          </button>
-        </nav>
-
-        <div className="md:ml-4">
-          {isSignedIn ? (
-            <UserButton afterSignOutUrl="/" />
-          ) : (
-            <UserGreeting />
-          )}
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
   );
 };
 

@@ -26,7 +26,7 @@ const Dashboard = () => {
             <p className="text-xs md:text-lg lg:text-xl text-white mb-4 md:mb-0">This image will be replaced with one of the late Schield`s</p>
 
             <Image
-              src="/images/gallery/construction.jpg"
+              src="/images/gallery/Pat.JPG"
               alt="Centered Image"
               width={300}
               height={200}

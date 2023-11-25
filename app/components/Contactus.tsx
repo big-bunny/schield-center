@@ -41,7 +41,7 @@ const ContactSection: React.FC = () => {
   return (
     <section id="contact" className="container rounded-full py-20">
       {/* Navigation bar for the contact section */}
-      <nav className="md:w-2/3 bg-gradient-to-r from-accent to-white  backdrop-blur-3xl rounded-xl shadow-md mx-auto">
+      <nav className="md:w-2/3 bg-gradient-to-r from-green-400 to-green-100  backdrop-blur-3xl rounded-xl shadow-md mx-auto">
         <nav className="flex justify-evenly bg-right bg-no-repeat bg-contain text-primary">
           <div className="flex justify-between items-center w-full p-8 md:p-12">
             <div className="flex flex-column items-center h-full">
