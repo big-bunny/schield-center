@@ -73,6 +73,9 @@ devDependencies:
   '@types/jest':
     specifier: ^29.5.5
     version: 29.5.5
+  '@types/react-big-calendar':
+    specifier: ^1.8.5
+    version: 1.8.5
   jest:
     specifier: ^29.7.0
     version: 29.7.0(@types/node@20.6.3)
@@ -1126,6 +1129,10 @@ packages:
       '@types/node': 20.6.3
     dev: false
 
+  /@types/date-arithmetic@4.1.4:
+    resolution: {integrity: sha512-p9eZ2X9B80iKiTW4ukVj8B4K6q9/+xFtQ5MGYA5HWToY9nL4EkhV9+6ftT2VHpVMEZb5Tv00Iel516bVdO+yRw==}
+    dev: true
+
   /@types/express-serve-static-core@4.17.36:
     resolution: {integrity: sha512-zbivROJ0ZqLAtMzgzIUC4oNqDG9iF0lSsAqpOD9kbs5xcIM3dTiyuHvBc7R8MtWBp3AAWGaovJa+wzWPjLYW7Q==}
     dependencies:
@@ -1217,6 +1224,14 @@ packages:
   /@types/range-parser@1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: false
+
+  /@types/react-big-calendar@1.8.5:
+    resolution: {integrity: sha512-+b4SlRiOeQyE8BtBwPlAMa5xVQhVEFuz3hFSjO6Gz419a0hMvMm+4eBHmvgTENRdzgBudOuIE8swE/S1gawWFw==}
+    dependencies:
+      '@types/date-arithmetic': 4.1.4
+      '@types/prop-types': 15.7.6
+      '@types/react': 18.2.22
+    dev: true
 
   /@types/react-dom@18.2.7:
     resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
