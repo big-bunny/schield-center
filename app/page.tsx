@@ -172,8 +172,8 @@ const Dashboard: React.FC = () => {
             >
               <div className="absolute inset-0 bg-green-500 bg-opacity-25 px-4 py-8 md:px-12 rounded-3xl shadow-md border border-red-500">
                 <div className="text-2xl font-extrabold text-black leading-relaxed">
-                  <p className="text-white">{currentCarousel?.text}</p>
-                </div>
+                  <p className="text-black text-4xl">{currentCarousel?.text}</p>
+                </div>  
               </div>
             </div>
           </div>
@@ -197,8 +197,8 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Recent Activities Calendar */}
-          <div className="bg-white rounded-lg p-4 mb-8">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Recent Activities</h2>
+          <div className="backdrop-blur-3xl  rounded-lg p-4 mb-8">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Recent Activities</h2>
             <MyCalendar />
           </div>
 
