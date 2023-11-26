@@ -25,6 +25,7 @@ type Event = {
 const Dashboard: React.FC = () => {
   const [currentCarousel, setCurrentCarousel] = useState<CarouselItem | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const carouselData: CarouselItem[] = useMemo(
     () => [
@@ -103,13 +104,14 @@ const Dashboard: React.FC = () => {
     return () => clearInterval(interval);
   }, [carouselData]);
 
-  const closeModal = () => {
-    setSelectedEvent(null);
+  const handleEventClick = (event: Event) => {
+    setSelectedEvent(event);
+    setSelectedDate(event.start);
   };
 
   const eventStyleGetter = (event: Event) => {
     const style = {
-      backgroundColor: event.desc === 'important' ? 'red' : 'green', // Customize based on the event description
+      backgroundColor: event.desc === 'important' ? 'red' : 'green',
       borderRadius: '0px',
       opacity: 0.8,
       color: 'white',
@@ -119,6 +121,28 @@ const Dashboard: React.FC = () => {
     return {
       style,
     };
+  };
+
+  const MyCalendar = (props: any) => (
+    <Calendar
+      localizer={localizer}
+      events={events}
+      startAccessor="start"
+      endAccessor="end"
+      style={{
+        height: '350px',
+        borderRadius: '10px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      }}
+      eventPropGetter={eventStyleGetter}
+      onSelectEvent={handleEventClick}
+      {...props}
+    />
+  );
+
+  const closeModal = () => {
+    setSelectedEvent(null);
+    setSelectedDate(null);
   };
 
   return (
@@ -164,25 +188,18 @@ const Dashboard: React.FC = () => {
 
           <div className="bg-white rounded-lg p-4 mb-8">
             <h2 className="text-xl font-bold mb-4 text-gray-800">Recent Activities</h2>
-            <Calendar
-              localizer={localizer}
-              events={events}
-              startAccessor="start"
-              endAccessor="end"
-              style={{
-                height: '350px',
-                borderRadius: '10px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              }}
-              eventPropGetter={eventStyleGetter}
-            />
+            <MyCalendar />
           </div>
 
           <div className="bg-white rounded-lg p-4">
             <h2 className="text-xl font-bold mb-4 text-gray-800">Upcoming Events</h2>
             <ul>
               {events.map((event, index) => (
-                <li key={index} className="cursor-pointer hover:text-blue-500">
+                <li
+                  key={index}
+                  className="cursor-pointer hover:text-blue-500"
+                  onClick={() => handleEventClick(event)}
+                >
                   {event.title}
                 </li>
               ))}
@@ -195,6 +212,11 @@ const Dashboard: React.FC = () => {
         <div className="modal bg-white p-4 rounded-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <h2 className="text-2xl font-bold mb-4 text-gray-800">{selectedEvent.title}</h2>
           <p className="text-gray-700">{selectedEvent.desc}</p>
+          {selectedDate && (
+            <p className="text-gray-700">
+              Date: {moment(selectedDate).format('MMMM D, YYYY')}
+            </p>
+          )}
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mt-4"
             onClick={closeModal}
@@ -208,4 +230,3 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
-
