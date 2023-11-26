@@ -1,99 +1,82 @@
-"use client"
- 
-import { useMemo, useState, useEffect } from 'react';
+"use client";
+
+import { useState } from 'react';
+// Import necessary dependencies...
 
 const AboutPage = () => {
-  const carouselData = useMemo(
-    () => [
-      {
-        title: 'Students and Principal',
-        image: 'images/sliders/slide-1.jpg',
-        text:
-          'At Schield Center, we strive to create a nurturing learning environment that values diversity and inclusivity. We believe that education is not just about acquiring knowledge and skills, but also about developing critical thinking, creativity, and a passion for lifelong learning.',
-      },
-      {
-        title: 'Trophy',
-        image: 'images/sliders/slide-2.jpg',
-        text:
-          'Our mission is to empower children to face the challenges and opportunities of the 21st century by providing a well-rounded education that includes academic, social, and emotional development. We aim to cultivate a culture of curiosity, inquiry, and collaboration that prepares our students to be responsible global citizens.',
-      },
-      {
-        title: 'Students and Principal 2',
-        image: 'images/sliders/slide-3.jpg',
-        text:
-          'Through our work, we hope to inspire a new generation of children who are confident, resilient, and empowered to pursue their dreams and make a positive impact in the world.',
-      },
-      {
-        title: 'Students and Principal 3',
-        image: 'images/sliders/slide-4.jpg',
-        text:
-          'At Schield Center, we are committed to providing quality education to every child, regardless of their background or financial situation. However, many children in Kajiado face significant barriers to education, including poverty, limited access to schools, and cultural beliefs that prioritize traditional practices over formal education.',
-      },
-      {
-        title: 'Students and Principal 4',
-        image: 'images/sliders/slide-5.jpg',
-        text:
-          'To overcome these challenges, Schield Center relies on the generous support of sponsors who share our vision and values. With their help, we are able to provide scholarships, uniforms, books, and other school supplies to hundreds of children each year. We also work closely with local schools and communities to identify the most vulnerable children and provide them with the resources they need to thrive.',
-      },
-    ],
-    []
-  );
+  const [currentImage, setCurrentImage] = useState('/images/gallery/pat.jpeg');
+  const patriciaPdf = '/pdf/team/Pat.pdf';
 
-  const [currentCarousel, setCurrentCarousel] = useState(carouselData[0]);
+  const [showOverflow, setShowOverflow] = useState(false);
 
-  useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setCurrentCarousel(carouselData[i]);
-      i = (i + 1) % carouselData.length;
-    }, 45000);
+  const handleLearnMore = () => {
+    setShowOverflow(true);
+  };
 
-    return () => clearInterval(interval);
-  }, [carouselData]);
+  const handleImageClick = () => {
+    window.open(patriciaPdf, '_blank');
+  };
 
   return (
     <>
-        <div id="about" className=" rounded-lg mt-0  text-gray-700 my-8">
-          <div className="container mx-auto px-8 py-10">
-            <h1 className="text-4xl  p-3 font-extrabold bg-gradient-to-r from-green-500 rounded-full mb-8 text-white">ABOUT SCHIELD CENTRE</h1>
-            <div className="flex flex-col lg:flex-row">
-              <div className="w-full lg:w-2/3 flex">
-                <header
-                  className="min-h-screen bg-fixed rounded-lg bg-no-repeat bg-cover bg-center"
-                  style={{ backgroundImage: `url('${currentCarousel.image}')` }}
-                >
-                  <div className="bg-green-500 bg-opacity-25 px-4 py-8 md:px-12 rounded-3xl shadow-md border border-red-500">
-                    <div className="text-2xl font-extrabold text-black  leading-relaxed">
-                      <p>{currentCarousel.text}</p>
-                    </div>
+      <div id="about" className="rounded-lg mt-0 text-gray-700 my-8">
+        <div className="container mx-auto px-8 py-10">
+          <h1 className="text-4xl p-3 font-extrabold bg-gradient-to-r from-green-500 rounded-full mb-8 text-white">
+            ABOUT SCHIELD CENTRE
+          </h1>
+          <div className="flex flex-col lg:flex-row">
+            <div className="w-full lg:w-3/10 flex">
+              <div
+                className="min-h-screen bg-fixed rounded-lg bg-no-repeat bg-cover bg-center cursor-pointer transform hover:scale-105 transition-transform duration-300"
+                style={{ backgroundImage: `url('${currentImage}')`, flex: '30%' }}
+                onClick={handleImageClick}
+              >
+                <div className="h-full w-full opacity-0 hover:opacity-100">
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-white font-bold">View Patricia`s PDF</p>
                   </div>
-                </header>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-7/10 px-4 border-red-500 py-8 lg:py-0">
+              <div className="text-3xl bg-white text-gray-900 text-center py-10 overflow-hidden">
+                <h1 className="text-4xl bold text-white">HISTORY</h1>
+                <p>
+                  Schield Center is a school located in Kajiado, officially established in 2008 by Patricia Schield,
+                  an American woman who made a courageous decision. Patricia sold everything she owned and utilized her
+                  inheritance to initiate the school. Tragically, Patricia passed away in 2008 before witnessing her dreams
+                  come to fruition. Feeling like she had failed, Patricia`s dying wish to Joseph Mboya was to establish the
+                  school through trustees and fundraising efforts.
+                </p>
+                {showOverflow && (
+                  <>
+                    <p>
+                      Additional text line 1
+                    </p>
+                    <p>
+                      Additional text line 2
+                    </p>
+                    {/* Add more lines as needed */}
+                  </>
+                )}
               </div>
 
-              <div className="w-full lg:w-1/3 px-4 border-red-500  py-8 lg:py-0">
-                <div className="text-3xl bg-white text-gray-900 text-center py-10">
-                  <h1 className='text-4xl bold text-white '>HISORY</h1>
-                  <p>
-                    Schield Center is a school located in Kajiado, officially established in 2008 by Patricia Schield,
-                    an American woman who made a courageous decision. Patricia sold everything she owned and utilized her
-                    inheritance to initiate the school. Tragically, Patricia passed away in 2008 before witnessing her dreams
-                    come to fruition. Feeling like she had failed, Patricia`s dying wish to Joseph Mboya was to establish the
-                    school through trustees and fundraising efforts.
-                  </p>
-                </div>
-
-                <div className="text-center py-4">
+              <div className="text-center py-4">
+                {!showOverflow && (
                   <button
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
+                    onClick={handleLearnMore}
                   >
                     Learn More
                   </button>
-                </div>
+                )}
               </div>
             </div>
           </div>
         </div>
+      </div>
     </>
   );
 };

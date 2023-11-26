@@ -4,12 +4,7 @@ import Image from 'next/image';
 
 const Team = () => {
   const Profiles = [
-    {
-      id: 1,
-      title: 'Patricia Schield',
-      pdf: '/pdf/team/Pat.pdf',
-      preview: '/pdf/team/Pat.pdf',
-    },
+ 
     {
       id: 2,
       title: 'CO-Director Trina',
