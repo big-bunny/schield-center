@@ -5,7 +5,6 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-
 const localizer = momentLocalizer(moment);
 
 // Define types for carousel items and events
@@ -151,7 +150,14 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen p-8">
+    <div
+      className="min-h-screen p-8 bg-cover bg-center"
+      style={{
+        backgroundImage: `url('${currentCarousel?.image}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <h1 className="text-4xl p-3 text-white font-extrabold bg-gradient-to-r from-green-500 rounded-full mb-8">
         Welcome to Schield Centre Dashboard
       </h1>
@@ -165,18 +171,8 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Image Slider */}
-          <div className="mb-4">
-            <div
-              className="min-h-screen bg-fixed rounded-lg bg-no-repeat bg-cover bg-center relative"
-              style={{ backgroundImage: `url('${currentCarousel?.image}')` }}
-            >
-              <div className="absolute inset-0 bg-green-500 bg-opacity-25 px-4 py-8 md:px-12 rounded-3xl shadow-md border border-red-500">
-                <div className="text-2xl font-extrabold text-black leading-relaxed">
-                  <p className="text-black text-4xl">{currentCarousel?.text}</p>
-                </div>  
-              </div>
-            </div>
-          </div>
+          {/* The image slider is now part of the background */}
+          {/* Removed the previous implementation for the slider here */}
 
           {/* Vision Statement */}
           <div className="scrolling-text mb-4 bg-white text-center rounded-3xl p-6">
@@ -239,4 +235,3 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
-
