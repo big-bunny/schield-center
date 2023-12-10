@@ -1,18 +1,40 @@
-/* eslint-disable @next/next/no-img-element */
 "use client"
-// LandingPage.tsx
-import React, { useEffect, useMemo } from 'react';
+/* eslint-disable @next/next/no-img-element */
+import React, { useEffect, useMemo, useState } from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Slider from 'react-slick';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { CarouselItem, Event } from './types';
 
-const LandingPage: React.FC = () => {
+
+const localizer = momentLocalizer(moment);
+
+// Define types for carousel items and events
+type CarouselItem = {
+  title: string;
+  image: string;
+  text: string;
+};
+
+type Event = {
+  title: string;
+  start: Date;
+  end: Date;
+  desc: string;
+};
+
+const Dashboard: React.FC = () => {
+  const [currentCarousel, setCurrentCarousel] = useState<CarouselItem | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
   const carouselData: CarouselItem[] = useMemo(
     () => [
       {
         title: 'Students and Principal',
-        image: '/images/sliders/slide-1.jpg', // Update the path
+        image: '/images/sliders/slide-1.jpg',
         text:
           'At Schield Center, we strive to create a nurturing learning environment that values diversity and inclusivity. We believe that education is not just about acquiring knowledge and skills, but also about developing critical thinking, creativity, and a passion for lifelong learning.',
       },
@@ -81,65 +103,156 @@ const LandingPage: React.FC = () => {
   );
 
   useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setCurrentCarousel(carouselData[i]);
+      i = (i + 1) % carouselData.length;
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [carouselData]);
+
+  useEffect(() => {
     AOS.init({
       duration: 800,
       easing: 'ease-out-back',
       delay: 200,
     });
+    AOS.refresh(); // Refresh AOS whenever new elements are added dynamically
   }, []);
 
+  const closeModal = () => {
+    setSelectedEvent(null);
+    setSelectedDate(null);
+  };
+
+  const handleEventClick = (event: Event) => {
+    setSelectedEvent(event);
+    setSelectedDate(event.start);
+  };
+
+  const eventStyleGetter = (event: Event, start: Date, end: Date, isSelected: boolean) => {
+    const style = {
+      backgroundColor: isSelected ? 'lightblue' : event.desc === 'important' ? 'red' : 'green',
+      borderRadius: '0px',
+      opacity: 0.8,
+      color: 'white',
+      border: '0px',
+      display: 'block',
+    };
+    return {
+      style,
+    };
+  };
+
+  const MyCalendar = (props: any) => (
+    <Calendar
+      localizer={localizer}
+      events={events}
+      startAccessor="start"
+      endAccessor="end"
+      style={{
+        height: '350px',
+        borderRadius: '10px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      }}
+      eventPropGetter={eventStyleGetter}
+      onSelectEvent={handleEventClick}
+      {...props}
+    />
+  );
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative bg-cover bg-center overflow-hidden">
-      <div className="absolute inset-0 opacity-40"></div>
+    <div className="min-h-screen p-8 bg-cover bg-center relative" style={{ backgroundImage: `url('${currentCarousel?.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+     
+      {/* Welcome Title */}
+      <h1 className="text-4xl p-3 text-white font-extrabold bg-gradient-to-r from-green-500 rounded-full mb-8" data-aos="fade-right">
+        Welcome to Schield Centre Dashboard
+      </h1>
 
-      <Slider
-        autoplay
-        dots
-        infinite
-        speed={500}
-        slidesToShow={1}
-        slidesToScroll={1}
-        className="w-full h-full mb-8 relative z-10"
-        swipeToSlide
-        draggable
-      >
-        {carouselData.map((item, index) => (
-          <div key={index} className="relative focus:outline-none">
-            <div
-              className="h-full w-full absolute inset-0 bg-cover bg-center transition duration-500 ease-in-out transform hover:scale-105"
-              style={{ backgroundImage: `url(${item.image})` }}
-            ></div>
-            <div className="absolute inset-0 bg-black opacity-40 transition duration-500 ease-in-out transform hover:scale-105"></div>
-            <div className="absolute inset-0 flex items-center justify-center text-white">
-              <div className="text-center z-10" data-aos="fade-up">
-                <h2 className="text-4xl font-bold mb-4 animate__animated animate__bounce">
-                  {item.title}
-                </h2>
-                <p className="text-lg animate__animated animate__bounce">{item.text}</p>
-              </div>
-            </div>
+      {/* Main Content */}
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-3/4 mb-8 md:mr-8">
+          {/* Mission Statement */}
+          <div className="scrolling-text mb-4 text-center bg-white rounded-3xl p-6" data-aos="fade-up">
+            <h3 className="text-2xl text-red-500">Mission Statement</h3>
+            <p className="text-xl p-2 text-gray-800">
+              Your Mission Statement content here...
+            </p>
           </div>
-        ))}
-      </Slider>
 
-      <div className="max-w-3xl px-4 mt-8 z-10">
-        <h2 className="text-3xl font-bold mb-4 text-white" data-aos="fade-up">
-          Upcoming Events
-        </h2>
-        <ul className="list-disc text-white">
-          {events.map((event, index) => (
-            <li key={index} className="mb-4" data-aos="fade-up">
-              <h3 className="text-xl font-semibold">{event.title}</h3>
-              <p>
-                {event.start.toLocaleDateString()} - {event.end.toLocaleDateString()}
-              </p>
-              <p>{event.desc}</p>
-            </li>
-          ))}
-        </ul>
+          {/* Image Slider */}
+          <div className="mb-8" data-aos="fade-up">
+            <Slider autoplay dots={true}>
+              {carouselData.map((item, index) => (
+                <div key={index}>
+                  <img src={item.image} alt={item.title} className="w-full h-96 object-cover rounded-3xl" />
+                </div>
+              ))}
+            </Slider>
+          </div>
+
+          {/* Vision Statement */}
+          <div className="scrolling-text mb-4 bg-white text-center rounded-3xl p-6" data-aos="fade-up">
+            <h3 className="text-2xl text-red-500">Vision Statement</h3>
+            <p className="text-xl p-2 text-gray-800">
+              Your Vision Statement content here...
+            </p>
+          </div>
+        </div>
+
+        {/* Sidebar with Information, Calendar, and Upcoming Events */}
+        <div className="w-full md:w-1/4">
+          {/* Information */}
+          <div className="bg-white rounded-lg p-4 mb-8" data-aos="fade-left">
+            <h2 className="text-xl font-bold mb-4 text-gray-800">Important Information</h2>
+            <ul className="list-disc pl-4">
+              <li className="mb-2">Total Students: 210</li>
+              <li className="mb-2">Total Teachers: 14</li>
+            </ul>
+          </div>
+
+          {/* Recent Activities Calendar */}
+          <div className="backdrop-blur-3xl  rounded-lg p-4 mb-8" data-aos="fade-left">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Recent Activities</h2>
+            <MyCalendar />
+          </div>
+
+          {/* Upcoming Events */}
+          <div className="bg-white rounded-lg p-4" data-aos="fade-left">
+            <h2 className="text-xl font-bold mb-4 text-gray-800">Upcoming Events</h2>
+            <ul>
+              {events.map((event, index) => (
+                <li key={index} className="cursor-pointer hover:text-blue-500" onClick={() => handleEventClick(event)}>
+                  {event.title}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
+
+       {/* Image Description with Blur Backdrop */}
+      <div className="absolute inset-0 backdrop-blur-sm p-4 rounded-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  p-8 bg-black mb-40 bg-opacity-40 text-white" data-aos="zoom-in">
+        <h2 className="text-2xl font-bold mb-4">{currentCarousel?.title}</h2>
+        <p className="text-gray-300 mb-30">
+          {currentCarousel?.text}
+        </p>
+      </div>
+
+      {/* Modal for Event Details */}
+      {selectedEvent && (
+        <div className="modal bg-white p-4 rounded-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" data-aos="zoom-in">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">{selectedEvent.title}</h2>
+          <p className="text-gray-700">{selectedEvent.desc}</p>
+          <p className="text-gray-700">{selectedDate && moment(selectedDate).format('MMMM Do YYYY')}</p>
+          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mt-4" onClick={closeModal}>
+            Close
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default LandingPage;
+export default Dashboard;
