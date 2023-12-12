@@ -29,6 +29,7 @@ const Dashboard: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
+ 
   const carouselData: CarouselItem[] = useMemo(
     () => [
       {
@@ -37,7 +38,30 @@ const Dashboard: React.FC = () => {
         text:
           'At Schield Center, we strive to create a nurturing learning environment that values diversity and inclusivity. We believe that education is not just about acquiring knowledge and skills, but also about developing critical thinking, creativity, and a passion for lifelong learning.',
       },
-      // Add more carousel items as needed
+      {
+        title: 'Trophy',
+        image: '/images/sliders/slide-2.jpg',
+        text:
+          'Our mission is to empower children to face the challenges and opportunities of the 21st century by providing a well-rounded education that includes academic, social, and emotional development. We aim to cultivate a culture of curiosity, inquiry, and collaboration that prepares our students to be responsible global citizens.',
+      },
+      {
+        title: 'Students and Principal 2',
+        image: '/images/sliders/slide-3.jpg',
+        text:
+          'Through our work, we hope to inspire a new generation of children who are confident, resilient, and empowered to pursue their dreams and make a positive impact in the world.',
+      },
+      {
+        title: 'Students and Principal 3',
+        image: '/images/sliders/slide-4.jpg',
+        text:
+          'At Schield Center, we are committed to providing quality education to every child, regardless of their background or financial situation. However, many children in Kajiado face significant barriers to education, including poverty, limited access to schools, and cultural beliefs that prioritize traditional practices over formal education.',
+      },
+      {
+        title: 'Students and Principal 4',
+        image: '/images/sliders/slide-5.jpg',
+        text:
+          'To overcome these challenges, Schield Center relies on the generous support of sponsors who share our vision and values. With their help, we are able to provide scholarships, uniforms, books, and other school supplies to hundreds of children each year. We also work closely with local schools and communities to identify the most vulnerable children and provide them with the resources they need to thrive.',
+      },
     ],
     []
   );
@@ -50,7 +74,30 @@ const Dashboard: React.FC = () => {
         end: new Date(2023, 0, 3),
         desc: 'Visit to the local court for educational purposes.',
       },
-      // Add more events as needed
+      {
+        title: 'Sports Day',
+        start: new Date(2023, 0, 5),
+        end: new Date(2023, 0, 7),
+        desc: 'Annual sports event showcasing students’ talents.',
+      },
+      {
+        title: 'Science Fair',
+        start: new Date(2023, 2, 15),
+        end: new Date(2023, 2, 17),
+        desc: 'Students present their scientific projects.',
+      },
+      {
+        title: 'Parent-Teacher Meeting',
+        start: new Date(2023, 4, 10),
+        end: new Date(2023, 4, 12),
+        desc: 'Discussing students’ progress with parents.',
+      },
+      {
+        title: 'Art Exhibition',
+        start: new Date(2023, 6, 20),
+        end: new Date(2023, 6, 22),
+        desc: 'Showcasing students’ artistic talents.',
+      },
     ],
     []
   );
