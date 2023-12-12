@@ -1,5 +1,5 @@
-"use client"
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import React, { useEffect, useMemo, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -7,7 +7,6 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Slider from 'react-slick';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
 
 const localizer = momentLocalizer(moment);
 
@@ -38,30 +37,7 @@ const Dashboard: React.FC = () => {
         text:
           'At Schield Center, we strive to create a nurturing learning environment that values diversity and inclusivity. We believe that education is not just about acquiring knowledge and skills, but also about developing critical thinking, creativity, and a passion for lifelong learning.',
       },
-      {
-        title: 'Trophy',
-        image: '/images/sliders/slide-2.jpg',
-        text:
-          'Our mission is to empower children to face the challenges and opportunities of the 21st century by providing a well-rounded education that includes academic, social, and emotional development. We aim to cultivate a culture of curiosity, inquiry, and collaboration that prepares our students to be responsible global citizens.',
-      },
-      {
-        title: 'Students and Principal 2',
-        image: '/images/sliders/slide-3.jpg',
-        text:
-          'Through our work, we hope to inspire a new generation of children who are confident, resilient, and empowered to pursue their dreams and make a positive impact in the world.',
-      },
-      {
-        title: 'Students and Principal 3',
-        image: '/images/sliders/slide-4.jpg',
-        text:
-          'At Schield Center, we are committed to providing quality education to every child, regardless of their background or financial situation. However, many children in Kajiado face significant barriers to education, including poverty, limited access to schools, and cultural beliefs that prioritize traditional practices over formal education.',
-      },
-      {
-        title: 'Students and Principal 4',
-        image: '/images/sliders/slide-5.jpg',
-        text:
-          'To overcome these challenges, Schield Center relies on the generous support of sponsors who share our vision and values. With their help, we are able to provide scholarships, uniforms, books, and other school supplies to hundreds of children each year. We also work closely with local schools and communities to identify the most vulnerable children and provide them with the resources they need to thrive.',
-      },
+      // Add more carousel items as needed
     ],
     []
   );
@@ -74,30 +50,7 @@ const Dashboard: React.FC = () => {
         end: new Date(2023, 0, 3),
         desc: 'Visit to the local court for educational purposes.',
       },
-      {
-        title: 'Sports Day',
-        start: new Date(2023, 0, 5),
-        end: new Date(2023, 0, 7),
-        desc: 'Annual sports event showcasing students’ talents.',
-      },
-      {
-        title: 'Science Fair',
-        start: new Date(2023, 2, 15),
-        end: new Date(2023, 2, 17),
-        desc: 'Students present their scientific projects.',
-      },
-      {
-        title: 'Parent-Teacher Meeting',
-        start: new Date(2023, 4, 10),
-        end: new Date(2023, 4, 12),
-        desc: 'Discussing students’ progress with parents.',
-      },
-      {
-        title: 'Art Exhibition',
-        start: new Date(2023, 6, 20),
-        end: new Date(2023, 6, 22),
-        desc: 'Showcasing students’ artistic talents.',
-      },
+      // Add more events as needed
     ],
     []
   );
@@ -163,8 +116,17 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen p-8 bg-cover bg-center relative" style={{ backgroundImage: `url('${currentCarousel?.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-     
+    <div
+      className="min-h-screen p-8 bg-cover bg-center relative"
+      style={{
+        backgroundImage: `url(${currentCarousel?.image})`,
+      }}
+    >
+      {/* Marquee for Mission and Vision Statements */}
+      <marquee className="marquee text-xl text-red-500 mb-4 text-gray-800" data-aos="fade-right" data-aos-direction="left" data-aos-duration="5000">
+        Mission Statement: Your Mission Statement content here... Vision Statement: Your Vision Statement content here...
+      </marquee>
+
       {/* Welcome Title */}
       <h1 className="text-4xl p-3 text-white font-extrabold bg-gradient-to-r from-green-500 rounded-full mb-8" data-aos="fade-right">
         Welcome to Schield Centre Dashboard
@@ -172,33 +134,12 @@ const Dashboard: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex flex-col md:flex-row">
-        <div className="w-full md:w-3/4 mb-8 md:mr-8">
-          {/* Mission Statement */}
-          <div className="scrolling-text mb-4 text-center bg-white rounded-3xl p-6" data-aos="fade-up">
-            <h3 className="text-2xl text-red-500">Mission Statement</h3>
-            <p className="text-xl p-2 text-gray-800">
-              Your Mission Statement content here...
-            </p>
-          </div>
-
-          {/* Image Slider */}
-          <div className="mb-8" data-aos="fade-up">
-            <Slider autoplay dots={true}>
-              {carouselData.map((item, index) => (
-                <div key={index}>
-                  <img src={item.image} alt={item.title} className="w-full h-96 object-cover rounded-3xl" />
-                </div>
-              ))}
-            </Slider>
-          </div>
-
-          {/* Vision Statement */}
-          <div className="scrolling-text mb-4 bg-white text-center rounded-3xl p-6" data-aos="fade-up">
-            <h3 className="text-2xl text-red-500">Vision Statement</h3>
-            <p className="text-xl p-2 text-gray-800">
-              Your Vision Statement content here...
-            </p>
-          </div>
+        {/* Image Slider */}
+        <div className="w-full md:w-full mb-8 md:mr-8" data-aos="fade-up">
+          <Slider autoplay dots={true} lazyLoad="ondemand">
+            {/* Placeholder content */}
+            <div />
+          </Slider>
         </div>
 
         {/* Sidebar with Information, Calendar, and Upcoming Events */}
@@ -232,12 +173,10 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-       {/* Image Description with Blur Backdrop */}
-      <div className="absolute inset-0 backdrop-blur-sm p-4 rounded-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  p-8 bg-black mb-40 bg-opacity-40 text-white" data-aos="zoom-in">
+      {/* Image Description with Blur Backdrop on the left */}
+      <div className="relative inset-0 backdrop-blur-sm  rounded-lg fixed left-0 transform  bg-black mb-40 bg-opacity-40 text-white" data-aos="zoom-in">
         <h2 className="text-2xl font-bold mb-4">{currentCarousel?.title}</h2>
-        <p className="text-gray-300 mb-30">
-          {currentCarousel?.text}
-        </p>
+        <p className="text-gray-300 mb-30">{currentCarousel?.text}</p>
       </div>
 
       {/* Modal for Event Details */}
